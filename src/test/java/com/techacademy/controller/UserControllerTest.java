@@ -39,47 +39,40 @@ class UserControllerTest {
 
     @BeforeEach
     void beforeEach() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 
     @Test
     @DisplayName("User更新画面")
     @WithMockUser
     void testGetUser() throws Exception {
-        MvcResult result = mockMvc.perform(get("/user/update/1/"))
-            .andExpect(status().isOk())
-            .andExpect(model().attributeExists("user"))
-            .andExpect(model().hasNoErrors())
-            .andExpect(view().name("user/update"))
-            .andReturn();
+        MvcResult result = mockMvc.perform(get("/user/update/1/")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("user")).andExpect(model().hasNoErrors())
+                .andExpect(view().name("user/update")).andReturn();
 
-        User user = (User)result.getModelAndView().getModel().get("user");
+        User user = (User) result.getModelAndView().getModel().get("user");
         assertEquals(1, user.getId());
         assertEquals("キラメキ太郎", user.getName());
     }
+
     @Test
     @DisplayName("User更新画面")
     @WithMockUser
     void testGetList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/user/list"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("userlist"))
-                .andExpect(model().hasNoErrors())
-                .andExpect(view().name("user/list"))
-                .andReturn();
+        MvcResult result = mockMvc.perform(get("/user/list")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("userlist")).andExpect(model().hasNoErrors())
+                .andExpect(view().name("user/list")).andReturn();
 
-        List<User> user = (List<User>)result.getModelAndView().getModel().get("userlist");
+        List<User> user = (List<User>) result.getModelAndView().getModel().get("userlist");
         assertEquals(3, user.size());
-        assertEquals(1,1);
-        assertEquals("キラメキ太郎","キラメキ太郎") ;
-        assertEquals(2,2);
-        assertEquals("キラメキ次郎","キラメキ次郎");
-        assertEquals(3,3);
-        assertEquals("キラメキ花子","キラメキ花子");
+
+        List<User> userList = (List<User>) result.getModelAndView().getModel().get("userlist");
+
+        assertEquals("キラメキ太郎", "キラメキ太郎");
+        assertEquals("キラメキ次郎", "キラメキ次郎");
+        assertEquals("キラメキ花子", "キラメキ花子");
+        assertEquals(1, 1);
+        assertEquals(2, 2);
+        assertEquals(3, 3);
     }
 }
-
-
-
