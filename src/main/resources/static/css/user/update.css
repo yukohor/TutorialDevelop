@@ -6,3 +6,7 @@ label{
     line-height: 150%;
 
 }
+
+.err {
+    color:red;
+}

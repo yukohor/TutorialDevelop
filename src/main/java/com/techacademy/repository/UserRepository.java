@@ -6,4 +6,5 @@ import com.techacademy.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+
 }

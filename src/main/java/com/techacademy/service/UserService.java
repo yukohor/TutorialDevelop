@@ -21,8 +21,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Integer id) {
-        return userRepository.findById(id).get();
+    public User getUser (Integer user) {
+        return userRepository.findById(user).get();
     }
 
     @Transactional
@@ -36,4 +36,5 @@ public class UserService {
             userRepository.deleteById(id);
         }
     }
+
 }

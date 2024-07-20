@@ -2,6 +2,7 @@ package com.techacademy.controller;
 
 import java.util.Set;
 
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ public class UserController {
         this.service = service;
     }
 
+
     @GetMapping("/list")
     public String getList(Model model) {
         model.addAttribute("userlist", service.getUserList());
@@ -38,29 +40,40 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String postRegister(@Validated User user, BindingResult res, Model model) {
-        if(res.hasErrors()) {
+    public String postRegister(@Validated User user, BindingResult res, Model model ) {
+        if (res.hasErrors()) {
             return getRegister(user);
         }
-    service.saveUser(user);
+        service.saveUser(user);
         return "redirect:/user/list";
     }
 
     @GetMapping("/update/{id}/")
-    public String getUser(@PathVariable("id") Integer id, Model model) {
+    public String getUser(@PathVariable("id") Integer id, Model model, User user) {
+        if (id == null) {
+            model.addAttribute("user", user);
+            return "user/update";
+        }
         model.addAttribute("user", service.getUser(id));
         return "user/update";
     }
 
+
+
     @PostMapping("/update/{id}/")
-    public String postUser(User user) {
+    public String postUser(@Validated User user, BindingResult res, Model model) {
+        if (res.hasErrors()) {
+            return getUser(null,model, user);
+        }
         service.saveUser(user);
         return "redirect:/user/list";
     }
+
 
     @PostMapping(path = "list", params = "deleteRun")
     public String deleteRun(@RequestParam(name = "idck") Set<Integer> idck, Model model) {
         service.deleteUser(idck);
         return "redirect:/user/list";
     }
-}
+
+    }

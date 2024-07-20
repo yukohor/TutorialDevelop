@@ -23,15 +23,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name  = "user")
 public class User {
 
-    /** 性別用の列挙型 */
     public static enum Gender {
         男性, 女性
     }
 
-    /** 主キー。自動生成 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -55,6 +53,8 @@ public class User {
     @Length(max=50)
     private String email;
 
+
+
     @OneToOne(mappedBy="user")
     private Authentication authentication;
 
@@ -64,5 +64,9 @@ public class User {
         if (authentication!=null) {
             authentication.setUser(null);
         }
+
+
     }
+
+
 }
