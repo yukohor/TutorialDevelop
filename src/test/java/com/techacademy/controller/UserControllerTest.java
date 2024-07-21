@@ -66,13 +66,11 @@ class UserControllerTest {
         List<User> user = (List<User>) result.getModelAndView().getModel().get("userlist");
         assertEquals(3, user.size());
 
-        List<User> userList = (List<User>) result.getModelAndView().getModel().get("userlist");
-
-        assertEquals("キラメキ太郎", "キラメキ太郎");
-        assertEquals("キラメキ次郎", "キラメキ次郎");
-        assertEquals("キラメキ花子", "キラメキ花子");
-        assertEquals(1, 1);
-        assertEquals(2, 2);
-        assertEquals(3, 3);
+        List<User> expected = user;
+        List<User> actual = user;
+        assertEquals(expected.size(), actual.size());
+        for(int i = 0; i < actual.size(); i ++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
     }
-}
+    }
