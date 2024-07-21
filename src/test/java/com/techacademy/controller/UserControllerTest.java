@@ -59,18 +59,29 @@ class UserControllerTest {
     @DisplayName("User更新画面")
     @WithMockUser
     void testGetList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/user/list")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("userlist")).andExpect(model().hasNoErrors())
-                .andExpect(view().name("user/list")).andReturn();
+        MvcResult result = mockMvc.perform(get("/user/list"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userlist"))
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("user/list"))
+                .andReturn();
 
-        List<User> user = (List<User>) result.getModelAndView().getModel().get("userlist");
-        assertEquals(3, user.size());
+        List<User> userlist = (List<User>) result.getModelAndView().getModel().get("userlist");
+        assertEquals(3, userlist.size());
 
-        List<User> expected = user;
-        List<User> actual = user;
-        assertEquals(expected.size(), actual.size());
-        for(int i = 0; i < actual.size(); i ++) {
-            assertEquals(expected.get(i), actual.get(i));
-        }
+
+        User user1 = userlist.get(0);
+        assertEquals(1, user1.getId());
+        assertEquals("キラメキ太郎", user1.getName());
+
+        User user2 = userlist.get(1);
+        assertEquals(2, user2.getId());
+        assertEquals("キラメキ次郎", user2.getName());
+
+        User user3 = userlist.get(2);
+        assertEquals(3, user3.getId());
+        assertEquals("キラメキ花子", user3.getName());
     }
-    }
+}
+
+
